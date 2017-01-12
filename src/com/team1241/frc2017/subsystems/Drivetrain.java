@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
- *@author Kaveesha Siribaddana
- *@since 11/01/17
+ * @author Kaveesha Siribaddana
+ * @since 11/01/17
  *
  */
 public class Drivetrain extends Subsystem {
-    
+
 	/** Drive Talons */
 	private CANTalon leftDriveFront;
 	private CANTalon leftDriveBack;
@@ -92,62 +92,93 @@ public class Drivetrain extends Subsystem {
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
 	}
 
-	/**
-	 * Sets the command TankDrive as the default command for this subsystem.
-	 */
 	public void initDefaultCommand() {
 		setDefaultCommand(new TankDrive());
 	}
 
-	/**
-	 * Sends supplied power value to the left drive motors.
-	 *
-	 * @param power
-	 *            Power value sent to motors (-1.0 to 1.0)
-	 */
 	public void runLeftDrive(double power) {
 		leftDriveFront.set(power);
 		leftDriveBack.set(power);
 	}
 
-	/**
-	 * Sends supplied power value to the right drive motors.
-	 *
-	 * @param poewr
-	 *            Power value sent to motors (-1.0 to 1.0)
-	 */
 	public void runRightDrive(double power) {
 		rightDriveFront.set(power);
 		rightDriveBack.set(power);
 	}
+
+	public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
+		double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
+		double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
+
+		runLeftDrive((output + angle) * speed);
+		runRightDrive((-output + angle) * speed);
+	}
+
+	public void driveAngle(double setAngle, double speed) {
+		double angle = gyroPID.calcPID(setAngle, getYaw(), 1);
+
+		runLeftDrive(speed + angle);
+		runRightDrive(-speed + angle);
+	}
+
+	public void turnDrive(double setAngle, double speed, double epsilon) {
+		double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
+
+		runLeftDrive(angle * speed);
+		runRightDrive(angle * speed);
+	}
 	
-	/**
-	 * This function returns the distance traveled from the left encoder in
-	 * inches.
-	 *
-	 * @return Returns distance traveled by encoder in inches
-	 */
+	//ENCODER FUNCTIONS
+	
 	public double getLeftEncoderDist() {
 		return leftDriveEncoder.getDistance();
 	}
 
-	/**
-	 * This function returns the distance traveled from the right encoder in
-	 * inches.
-	 *
-	 * @return Returns distance traveled by encoder in inches
-	 */
 	public double getRightEncoderDist() {
 		return rightDriveEncoder.getDistance();
 	}
 
-	/**
-	 * Gets the average distance between both encoders.
-	 *
-	 * @return Returns the average distance
-	 */
 	public double getAverageDistance() {
 		return (getLeftEncoderDist() + getRightEncoderDist()) / 2;
 	}
-}
+	
+	public void resetEncoders() {
+		leftDriveEncoder.reset();
+		rightDriveEncoder.reset();
+	}
 
+	// GYRO FUNCTIONS
+
+	public boolean gyroConnected() {
+		return gyro.isConnected();
+	}
+	
+	public boolean gyroCalibrating() {
+		return gyro.isCalibrating();
+	}
+
+	public double getYaw() {
+		return gyro.getYaw() / 88.5 * 90;
+	}
+
+	public double getPitch() {
+		return gyro.getPitch();
+	}
+	
+	public double getRoll() {
+		return gyro.getRoll();
+	}
+
+	public double getCompassHeading() {
+		return gyro.getCompassHeading();
+	}
+
+	public void resetGyro() {
+		gyro.zeroYaw();
+	}
+	
+	public void reset() {
+		resetEncoders();
+		resetGyro();
+	}
+}
