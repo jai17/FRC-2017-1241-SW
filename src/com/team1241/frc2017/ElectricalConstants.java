@@ -1,13 +1,13 @@
 package com.team1241.frc2017;
 
 /**
- * @author Kaveesha Siribaddana
- * @since 11/01/17
- *
  *        The ElectricalConstants is a mapping from the ports sensors and
  *        actuators are wired into to a variable name. This provides flexibility
  *        changing wiring, makes checking the wiring easier and significantly
  *        reduces the number of magic numbers floating around.
+ *        
+ *@author Kaveesha Siribaddana
+ *@since 11/01/17
  */
 
 public class ElectricalConstants {
@@ -37,7 +37,7 @@ public class ElectricalConstants {
 	// ***************************************************************************
 	public static final int driveWheelRadius = 4;// wheel radius in inches
 	public static final int drivePulsePerRotation = 128; // encoder pulse per rotation
-	public static final double driveGearRatio = 1 / 1; // ratio between wheeland encoder
+	public static final double driveGearRatio = 1 / 1; // ratio between wheel and encoder
 	
 	public static final double driveEncoderPulsePerRot = drivePulsePerRotation * driveGearRatio; // pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * 2 * driveWheelRadius) / driveEncoderPulsePerRot;

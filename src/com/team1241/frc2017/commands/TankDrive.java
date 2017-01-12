@@ -5,7 +5,11 @@ import com.team1241.frc2017.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * 		This class is used to set a default command for the Drivetrain subsystem. 
+ * 		This command allows the driver to control the robot using tank drive.
  *
+ *@author Kaveesha Siribaddana
+ *@since 11/01/17
  */
 public class TankDrive extends Command {
 
