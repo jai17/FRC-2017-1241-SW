@@ -1,5 +1,7 @@
 package com.team1241.frc2017.subsystems;
 
+import com.team1241.frc2017.ElectricalConstants;
+
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,7 +18,7 @@ public class Conveyor extends Subsystem {
 	Victor conveyor;
 	
 	public Conveyor(){
-		agitator = new Victor(ElectricalConstants.)
+		agitator = new Victor(ElectricalConstants.AGITATOR_MOTOR);
 	}
 	
 	
