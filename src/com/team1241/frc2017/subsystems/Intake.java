@@ -1,6 +1,7 @@
 package com.team1241.frc2017.subsystems;
 
 import com.team1241.frc2017.ElectricalConstants;
+import com.team1241.frc2017.commands.IntakeCommand;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,18 +23,17 @@ public class Intake extends Subsystem {
     	
     }
     
-    public void intake(){
-    	mainIntakeRollers.set(1);
-    	sideIntakeRollers.set(1);
+    public void intake(double speed){
+    	mainIntakeRollers.set(speed);
+    	sideIntakeRollers.set(speed);
     }
     
-    public void outtake(){
-    	mainIntakeRollers.set(-1);
+    public void outtake(double speed){
+    	mainIntakeRollers.set(speed);
     }
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new IntakeCommand());
     }
 }
 
