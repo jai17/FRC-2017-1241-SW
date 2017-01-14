@@ -4,8 +4,7 @@ import com.team1241.frc2017.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * 
+/** 
  * @author Bryan Kristiono
  * @author Kaveesha Siribaddana
  * @since 13/01/17
