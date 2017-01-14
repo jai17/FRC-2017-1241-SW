@@ -142,7 +142,7 @@ public class Drivetrain extends Subsystem {
 		runRightDrive(angle * speed);
 	}
 
-	// ENCODER FUNCTIONS
+	//ENCODER FUNCTIONS
 
 	public double getLeftDriveEncoder() {
 		return leftMaster.getPosition();
