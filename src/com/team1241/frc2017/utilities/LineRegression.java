@@ -1,4 +1,5 @@
 package com.team1241.frc2017.utilities;
+
 /**
  * Class used to calculate the line of regression. Used to find feed forward for
  * shooter velocity controller.
@@ -17,10 +18,7 @@ public class LineRegression {
 	private static double yAverage = 0;
 	private static double slope;
 	private static double intercept;
-	
-	/**
-	 * Instantiates a new line regression.
-	 */
+
 	public LineRegression() {
 	}
 

@@ -10,7 +10,6 @@ import com.team1241.frc2017.commands.TankDrive;
 import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.Nav6;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
