@@ -3,11 +3,12 @@ package com.team1241.frc2017.subsystems;
 import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
+import com.team1241.frc2017.commands.ShooterCommand;
 import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,6 +22,8 @@ public class Shooter extends Subsystem {
 	Counter optical;
 
 	PIDController shooterPID;
+	
+	Solenoid intakePiston;
 
 	LineRegression calcLine = new LineRegression();
 
@@ -35,7 +38,9 @@ public class Shooter extends Subsystem {
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
 
-		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
+		shooterPID = new PIDController(NumberConstants.pShooter,
+									   NumberConstants.iShooter,
+									   NumberConstants.dShooter);
 
 	}
 	
@@ -58,7 +63,6 @@ public class Shooter extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new ShooterCommand());
 	}
 }

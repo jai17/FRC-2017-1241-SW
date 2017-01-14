@@ -55,6 +55,9 @@ public class ElectricalConstants {
 	
     public static final int CLAW_PISTON_A 									= 0;
     public static final int CLAW_PISTON_B  									= 1;
+    
+    public static final int INTAKE_PISTON_A									= 2;
+    public static final int INTAKE_PISTON_B									= 3;
 	
 	// ***************************************************************************
 	// *************************** DIGITAL SENSORS *******************************
