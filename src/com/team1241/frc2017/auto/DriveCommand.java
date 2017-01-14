@@ -14,18 +14,18 @@ public class DriveCommand extends Command {
 	private double speed;
 	private double angle;
 	private double timeOut;
-	private double epsilon;
+	private double tolerance;
 
 	public DriveCommand(double setPoint, double speed, double angle, double timeOut) {
 		this(setPoint, speed, angle, timeOut, 1);
 	}
 
-    public DriveCommand(double setPoint, double speed, double angle, double timeOut, double epsilon) {
+    public DriveCommand(double setPoint, double speed, double angle, double timeOut, double tolerance) {
     	this.distance = setPoint;
     	this.speed = speed;
     	this.angle = angle;
     	this.timeOut = timeOut;
-    	this.epsilon = epsilon;
+    	this.tolerance = tolerance;
     	requires(Robot.drive);
     }
 
@@ -37,7 +37,7 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.driveSetpoint(distance, speed, angle, epsilon);
+    	Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
     	System.out.println("Gyro:" + Robot.drive.getYaw() + "Pitch:" + Robot.drive.getPitch() + " Roll:" + Robot.drive.getRoll());
     }
 
