@@ -68,7 +68,7 @@ public class Drivetrain extends Subsystem {
 		}
 
 		// Initialize Talons
-		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
+		leftDriveFront = new CANTalon	(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 
 		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
