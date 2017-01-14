@@ -2,6 +2,7 @@
 package com.team1241.frc2017;
 
 import com.team1241.frc2017.subsystems.Drivetrain;
+import com.team1241.frc2017.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drive;
+	public static Intake intake;
 
 	Command autonomousCommand;
 	SendableChooser chooser;
@@ -32,8 +34,11 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		
 		oi = new OI();
 		drive = new Drivetrain();
+		intake = new Intake();
+		
 		chooser = new SendableChooser();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());

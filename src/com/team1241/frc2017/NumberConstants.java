@@ -28,6 +28,8 @@ public class NumberConstants {
 	public static final double pGyro 									 = 0.00;
 	public static final double iGyro 									 = 0.00;
 	public static final double dGyro 									 = 0.00;
+	
+	
 
 
 }
