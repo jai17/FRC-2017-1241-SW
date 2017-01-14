@@ -34,8 +34,30 @@ public class ElectricalConstants {
 	// ***************************************************************************
 	
 	public static final int AGITATOR_MOTOR 									= 5;
-	public static final int CONVEYER_MOTOR									= 6;
+	public static final int CONVEYOR_MOTOR									= 6;
 	
+	// ***************************************************************************
+	// ******************************* PISTONS ***********************************
+	// ***************************************************************************
 	
+    public static final int CLAW_PISTON_A 									= 0;
+    public static final int CLAW_PISTON_B  									= 1;
+	
+	// ***************************************************************************
+	// *************************** DIGITAL SENSORS *******************************
+	// ***************************************************************************
+    
+    public static final int CONVEYOR_ENCODER_A								= 0;
+    public static final int CONVEYOR_ENCODER_B								= 1;
+    
+    //****************************************************************************
+  	//************************ CONVEYOR ENCODER CONSTANTS ************************
+  	//****************************************************************************
+  	public static final int conveyorPullyRadius = 4;//wheel radius in inches
+  	public static final int conveyorPulsePerRotation = 128; //encoder pulse per rotation
+  	public static final double conveyorGearRatio = 1/1; //ratio between wheel and encoder
+  	public static final double conveyorEncoderPulsePerRot = conveyorPulsePerRotation*conveyorGearRatio; //pulse per rotation * gear ratio
+  	public static final double conveyorEncoderDistPerTick =(Math.PI*2*conveyorPullyRadius)/conveyorEncoderPulsePerRot;
+  	public static final boolean conveyorEncoderReverse = false;
 
 }
