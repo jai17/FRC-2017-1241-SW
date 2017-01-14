@@ -1,6 +1,9 @@
 package com.team1241.frc2017.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.FeedbackDeviceStatus;
+import com.ctre.CANTalon.TalonControlMode;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.TankDrive;
@@ -21,14 +24,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drivetrain extends Subsystem {
 
 	/** Drive Talons */
-	private CANTalon leftDriveFront;
-	private CANTalon leftDriveBack;
-	private CANTalon rightDriveFront;
-	private CANTalon rightDriveBack;
+	private CANTalon leftMaster;
+	private CANTalon leftSlave;
+	private CANTalon rightMaster;
+	private CANTalon rightSlave;
 
 	/** Encoders on the drive */
-	private Encoder leftDriveEncoder;
-	private Encoder rightDriveEncoder;
+	private boolean leftEncoderConnected = false;
+	private boolean rightEncoderConnected = false;
 
 	/** Gyro on the drive */
 	private SerialPort serialPort;
@@ -68,25 +71,45 @@ public class Drivetrain extends Subsystem {
 		}
 
 		// Initialize Talons
-		leftDriveFront = new CANTalon	(ElectricalConstants.LEFT_DRIVE_FRONT);
-		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
+		leftMaster = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
+		leftMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		leftMaster.reverseSensor(false);
+		
+		leftSlave = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
+		leftSlave.changeControlMode(TalonControlMode.Follower);
+		leftSlave.set(ElectricalConstants.LEFT_DRIVE_FRONT);
 
-		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
-		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
+		rightMaster = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
+		rightMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightMaster.reverseSensor(false);
+		
+		rightSlave = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
+		rightSlave.changeControlMode(TalonControlMode.Follower);
+		rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
 
-		// Initialize Encoders
-		leftDriveEncoder = new Encoder(ElectricalConstants.LEFT_DRIVE_ENCODER_A,
-				ElectricalConstants.LEFT_DRIVE_ENCODER_B, ElectricalConstants.leftDriveTrainEncoderReverse,
-				Encoder.EncodingType.k4X);
-
-		leftDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick);
-
-		rightDriveEncoder = new Encoder(ElectricalConstants.RIGHT_DRIVE_ENCODER_A,
-				ElectricalConstants.RIGHT_DRIVE_ENCODER_B, ElectricalConstants.rightDriveTrainEncoderReverse,
-				Encoder.EncodingType.k4X);
-
-		rightDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick);
-
+		FeedbackDeviceStatus leftStatus = leftMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		
+		switch(leftStatus){
+		case FeedbackStatusPresent:
+			leftEncoderConnected = true;
+			break;
+		case FeedbackStatusNotPresent:
+			break;
+		case FeedbackStatusUnknown:
+			break;
+		}
+		
+		switch(rightStatus){
+		case FeedbackStatusPresent:
+			rightEncoderConnected = true;
+			break;
+		case FeedbackStatusNotPresent:
+			break;
+		case FeedbackStatusUnknown:
+			break;
+		}
+		
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
@@ -97,13 +120,13 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void runLeftDrive(double power) {
-		leftDriveFront.set(power);
-		leftDriveBack.set(power);
+		leftMaster.set(power);
+		leftSlave.set(power);
 	}
 
 	public void runRightDrive(double power) {
-		rightDriveFront.set(power);
-		rightDriveBack.set(power);
+		rightMaster.set(power);
+		rightSlave.set(power);
 	}
 
 	public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
@@ -128,43 +151,52 @@ public class Drivetrain extends Subsystem {
 		runRightDrive(angle * speed);
 	}
 	
-	//ENCODER FUNCTIONS
+	// ENCODER FUNCTIONS
 	
-	public double getLeftEncoderDist() {
-		return leftDriveEncoder.getDistance();
-	}
-
-	public double getRightEncoderDist() {
-		return rightDriveEncoder.getDistance();
-	}
-
-	public double getAverageDistance() {
-		return (getLeftEncoderDist() + getRightEncoderDist()) / 2;
+	public double getLeftDriveEncoder(){
+		return leftMaster.getPosition();
 	}
 	
-	public void resetEncoders() {
-		leftDriveEncoder.reset();
-		rightDriveEncoder.reset();
+	public double getRightDriveEncoder(){
+		return rightMaster.getPosition();
 	}
+	
+	public double getAverageDistance(){
+		return (getLeftDriveEncoder()+getRightDriveEncoder())/2;
+	}
+	
+	public boolean isLeftEncoderConnected(){
+		return leftEncoderConnected;
+	}
+	
+	public boolean isRightEncoderConnected(){
+		return rightEncoderConnected;
+	}
+	
+	public void resetEncoders(){
+		leftMaster.setPosition(0);
+		rightMaster.setPosition(0);
+	}
+	
 
 	// GYRO FUNCTIONS
 
 	public boolean gyroConnected() {
 		return gyro.isConnected();
 	}
-	
+
 	public boolean gyroCalibrating() {
 		return gyro.isCalibrating();
 	}
 
 	public double getYaw() {
-		return gyro.getYaw() / 88.5 * 90;
+		return gyro.getYaw();
 	}
 
 	public double getPitch() {
 		return gyro.getPitch();
 	}
-	
+
 	public double getRoll() {
 		return gyro.getRoll();
 	}
@@ -176,7 +208,7 @@ public class Drivetrain extends Subsystem {
 	public void resetGyro() {
 		gyro.zeroYaw();
 	}
-	
+
 	public void reset() {
 		resetEncoders();
 		resetGyro();
