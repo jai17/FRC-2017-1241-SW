@@ -74,7 +74,7 @@ public class Drivetrain extends Subsystem {
 		leftMaster = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		leftMaster.reverseSensor(false);
-		
+
 		leftSlave = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		leftSlave.changeControlMode(TalonControlMode.Follower);
 		leftSlave.set(ElectricalConstants.LEFT_DRIVE_FRONT);
@@ -82,15 +82,15 @@ public class Drivetrain extends Subsystem {
 		rightMaster = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
 		rightMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightMaster.reverseSensor(false);
-		
+
 		rightSlave = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		rightSlave.changeControlMode(TalonControlMode.Follower);
 		rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
 
 		FeedbackDeviceStatus leftStatus = leftMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
 		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		
-		switch(leftStatus){
+
+		switch (leftStatus) {
 		case FeedbackStatusPresent:
 			leftEncoderConnected = true;
 			break;
@@ -99,8 +99,8 @@ public class Drivetrain extends Subsystem {
 		case FeedbackStatusUnknown:
 			break;
 		}
-		
-		switch(rightStatus){
+
+		switch (rightStatus) {
 		case FeedbackStatusPresent:
 			rightEncoderConnected = true;
 			break;
@@ -109,7 +109,7 @@ public class Drivetrain extends Subsystem {
 		case FeedbackStatusUnknown:
 			break;
 		}
-		
+
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
@@ -119,65 +119,55 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new TankDrive());
 	}
 
-	public void runLeftDrive(double power) {
-		leftMaster.set(power);
-		leftSlave.set(power);
+	public void runLeftDrive(double input) {
+		leftMaster.set(input);
 	}
 
-	public void runRightDrive(double power) {
-		rightMaster.set(power);
-		rightSlave.set(power);
+	public void runRightDrive(double input) {
+		rightMaster.set(input);
 	}
 
-	public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
-		double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
-		double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
+	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {
+		double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), tolerance);
+		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 
 		runLeftDrive((output + angle) * speed);
 		runRightDrive((-output + angle) * speed);
 	}
 
-	public void driveAngle(double setAngle, double speed) {
-		double angle = gyroPID.calcPID(setAngle, getYaw(), 1);
-
-		runLeftDrive(speed + angle);
-		runRightDrive(-speed + angle);
-	}
-
-	public void turnDrive(double setAngle, double speed, double epsilon) {
-		double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
+	public void turnDrive(double setAngle, double speed, double tolerance) {
+		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 
 		runLeftDrive(angle * speed);
 		runRightDrive(angle * speed);
 	}
-	
+
 	// ENCODER FUNCTIONS
-	
-	public double getLeftDriveEncoder(){
+
+	public double getLeftDriveEncoder() {
 		return leftMaster.getPosition();
 	}
-	
-	public double getRightDriveEncoder(){
+
+	public double getRightDriveEncoder() {
 		return rightMaster.getPosition();
 	}
-	
-	public double getAverageDistance(){
-		return (getLeftDriveEncoder()+getRightDriveEncoder())/2;
+
+	public double getAverageDistance() {
+		return (getLeftDriveEncoder() + getRightDriveEncoder()) / 2;
 	}
-	
-	public boolean isLeftEncoderConnected(){
+
+	public boolean isLeftEncoderConnected() {
 		return leftEncoderConnected;
 	}
-	
-	public boolean isRightEncoderConnected(){
+
+	public boolean isRightEncoderConnected() {
 		return rightEncoderConnected;
 	}
-	
-	public void resetEncoders(){
+
+	public void resetEncoders() {
 		leftMaster.setPosition(0);
 		rightMaster.setPosition(0);
 	}
-	
 
 	// GYRO FUNCTIONS
 
