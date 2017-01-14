@@ -27,7 +27,15 @@ public class ElectricalConstants {
 	// ***************************************************************************
 	
 	public static final int MAIN_INTAKE_ROLLERS								= 0;
-	public static final int SIDE_INTAKE_ROLLERS                             = 1;	
+	public static final int SIDE_INTAKE_ROLLERS                             = 1;
+	
+	// ***************************************************************************
+	// **************************** CONVEYOR MOTORS ******************************
+	// ***************************************************************************
+	
+	public static final int AGITATOR_MOTOR 									= 5;
+	public static final int CONVEYER_MOTOR									= 6;
+	
 	
 
 }
