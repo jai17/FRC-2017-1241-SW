@@ -8,7 +8,7 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -23,7 +23,7 @@ public class Shooter extends Subsystem {
 
 	PIDController shooterPID;
 	
-	Solenoid intakePiston;
+	boolean shooterState;
 
 	LineRegression calcLine = new LineRegression();
 
@@ -41,7 +41,19 @@ public class Shooter extends Subsystem {
 		shooterPID = new PIDController(NumberConstants.pShooter,
 									   NumberConstants.iShooter,
 									   NumberConstants.dShooter);
+		
+		shooterState = false;
 
+	}
+	
+	// SHOOTER COMMANDS
+	
+	public boolean getShooterState(){
+		return shooterState;
+	}
+	
+	public void setShooterState(boolean state){
+		shooterState = state;
 	}
 	
 	public void setRPM(double rpm){
@@ -54,15 +66,27 @@ public class Shooter extends Subsystem {
 		shooterMotor.set(input);
 	}
 
-	public int getOptic() {
-		return optical.get();
-	}
-
 	public double getRPM() {
 		return optical.getRate() * 60;
 	}
-
+	
+	 public void setSpeed(double shotVal){
+	    	shooterMotor.set(-shotVal);	    	
+	    }
+	
+	// OPTICAL SENSOR COMMANDS
+	
+	public int getOptic() {
+		return optical.get();
+	}
+	
 	public void initDefaultCommand() {
 		setDefaultCommand(new ShooterCommand());
+	}
+	
+	// SHOOTER PID
+	
+	public void resetPID(){
+		shooterPID.resetPID();
 	}
 }
