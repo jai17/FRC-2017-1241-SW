@@ -26,10 +26,10 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     
-    	if(Robot.oi.getDriveLeftBumper()){
+    	if(Robot.oi.getToolLeftBumper()){
     		rpm.start();
-    	} else if (Robot.oi.getDriveLeftTrigger()){
-    		rpm.cancel();
+    	} else if (Robot.oi.getToolBackButton()){
+    		Robot.shooter.setShooterState(false);
     	}
 			
     }

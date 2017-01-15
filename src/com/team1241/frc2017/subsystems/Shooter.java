@@ -46,6 +46,10 @@ public class Shooter extends Subsystem {
 
 	}
 	
+	public void initDefaultCommand() {
+		setDefaultCommand(new ShooterCommand());
+	}
+	
 	// SHOOTER COMMANDS
 	
 	public boolean getShooterState(){
@@ -78,11 +82,7 @@ public class Shooter extends Subsystem {
 	
 	public int getOptic() {
 		return optical.get();
-	}
-	
-	public void initDefaultCommand() {
-		setDefaultCommand(new ShooterCommand());
-	}
+	}		
 	
 	// SHOOTER PID
 	
