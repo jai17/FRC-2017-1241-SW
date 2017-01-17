@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Conveyor extends Subsystem {
     
-    // here. Call these from Commands.
+    // NEED TO FIX COMMAND FOR CONVEYOR>
 	
 	//*********************************************************************************************
 	//*********************************** VARIABLES ***********************************************
