@@ -125,6 +125,24 @@ public class Drivetrain extends Subsystem {
 	public void runRightDrive(double input) {
 		rightMaster.set(input);
 	}
+	
+	public CANTalon getRightMaster(){
+		return rightMaster;
+	}
+	
+	public CANTalon getLeftMaster(){
+		return leftMaster;
+	}
+	
+	public void motionProfileMode(){
+		rightMaster.changeControlMode(TalonControlMode.MotionProfile);
+		leftMaster.changeControlMode(TalonControlMode.MotionProfile);
+	}
+	
+	public void voltageMode(){
+		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
+		leftMaster.changeControlMode(TalonControlMode.PercentVbus);
+	}
 
 	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {
 		double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), tolerance);
