@@ -1,6 +1,5 @@
 package com.team1241.frc2017.utilities;
 
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -57,24 +56,27 @@ public class MotionProfile {
 	 * is about 20ms.
 	 */
 	private static final int kNumLoopsTimeout = 10;
-	
+
 	private static double[][] points;
 	private static int numPoints;
-	
+
 	/**
-	 * Lets create a periodic task to funnel our trajectory points into our talon.
-	 * It doesn't need to be very accurate, just needs to keep pace with the motion
-	 * profiler executer.  Now if you're trajectory points are slow, there is no need
-	 * to do this, just call _talon.processMotionProfileBuffer() in your teleop loop.
-	 * Generally speaking you want to call it at least twice as fast as the duration
-	 * of your trajectory points.  So if they are firing every 20ms, you should call 
+	 * Lets create a periodic task to funnel our trajectory points into our
+	 * talon. It doesn't need to be very accurate, just needs to keep pace with
+	 * the motion profiler executer. Now if you're trajectory points are slow,
+	 * there is no need to do this, just call
+	 * _talon.processMotionProfileBuffer() in your teleop loop. Generally
+	 * speaking you want to call it at least twice as fast as the duration of
+	 * your trajectory points. So if they are firing every 20ms, you should call
 	 * every 10ms.
 	 */
 	class PeriodicRunnable implements java.lang.Runnable {
-	    public void run() {  _talon.processMotionProfileBuffer();    }
+		public void run() {
+			_talon.processMotionProfileBuffer();
+		}
 	}
+
 	Notifier _notifer = new Notifier(new PeriodicRunnable());
-	
 
 	/**
 	 * C'tor
@@ -157,56 +159,56 @@ public class MotionProfile {
 			 * do.
 			 */
 			switch (_state) {
-				case 0: /* wait for application to tell us to start an MP */
-					if (_bStart) {
-						_bStart = false;
-	
-						_setValue = CANTalon.SetValueMotionProfile.Disable;
-						startFilling();
-						/*
-						 * MP is being sent to CAN bus, wait a small amount of time
-						 */
-						_state = 1;
-						_loopTimeout = kNumLoopsTimeout;
-					}
-					break;
-				case 1: /*
-						 * wait for MP to stream to Talon, really just the first few
-						 * points
-						 */
-					/* do we have a minimum numberof points in Talon */
-					if (_status.btmBufferCnt > kMinPointsInTalon) {
-						/* start (once) the motion profile */
-						_setValue = CANTalon.SetValueMotionProfile.Enable;
-						/* MP will start once the control frame gets scheduled */
-						_state = 2;
-						_loopTimeout = kNumLoopsTimeout;
-					}
-					break;
-				case 2: /* check the status of the MP */
+			case 0: /* wait for application to tell us to start an MP */
+				if (_bStart) {
+					_bStart = false;
+
+					_setValue = CANTalon.SetValueMotionProfile.Disable;
+					startFilling();
 					/*
-					 * if talon is reporting things are good, keep adding to our
-					 * timeout. Really this is so that you can unplug your talon in
-					 * the middle of an MP and react to it.
+					 * MP is being sent to CAN bus, wait a small amount of time
 					 */
-					if (_status.isUnderrun == false) {
-						_loopTimeout = kNumLoopsTimeout;
-					}
+					_state = 1;
+					_loopTimeout = kNumLoopsTimeout;
+				}
+				break;
+			case 1: /*
+					 * wait for MP to stream to Talon, really just the first few
+					 * points
+					 */
+				/* do we have a minimum numberof points in Talon */
+				if (_status.btmBufferCnt > kMinPointsInTalon) {
+					/* start (once) the motion profile */
+					_setValue = CANTalon.SetValueMotionProfile.Enable;
+					/* MP will start once the control frame gets scheduled */
+					_state = 2;
+					_loopTimeout = kNumLoopsTimeout;
+				}
+				break;
+			case 2: /* check the status of the MP */
+				/*
+				 * if talon is reporting things are good, keep adding to our
+				 * timeout. Really this is so that you can unplug your talon in
+				 * the middle of an MP and react to it.
+				 */
+				if (_status.isUnderrun == false) {
+					_loopTimeout = kNumLoopsTimeout;
+				}
+				/*
+				 * If we are executing an MP and the MP finished, start loading
+				 * another. We will go into hold state so robot servo's
+				 * position.
+				 */
+				if (_status.activePointValid && _status.activePoint.isLastPoint) {
 					/*
-					 * If we are executing an MP and the MP finished, start loading
-					 * another. We will go into hold state so robot servo's
-					 * position.
+					 * because we set the last point's isLast to true, we will
+					 * get here when the MP is done
 					 */
-					if (_status.activePointValid && _status.activePoint.isLastPoint) {
-						/*
-						 * because we set the last point's isLast to true, we will
-						 * get here when the MP is done
-						 */
-						_setValue = CANTalon.SetValueMotionProfile.Hold;
-						_state = 0;
-						_loopTimeout = -1;
-					}
-					break;
+					_setValue = CANTalon.SetValueMotionProfile.Hold;
+					_state = 0;
+					_loopTimeout = -1;
+				}
+				break;
 			}
 		}
 	}
@@ -225,8 +227,8 @@ public class MotionProfile {
 		/* did we get an underrun condition since last time we checked ? */
 		if (_status.hasUnderrun) {
 			/*
-			 * clear the error. This flag does not auto clear, this way 
-			 * we never miss logging it.
+			 * clear the error. This flag does not auto clear, this way we never
+			 * miss logging it.
 			 */
 			_talon.clearMotionProfileHasUnderrun();
 		}
@@ -242,8 +244,12 @@ public class MotionProfile {
 			point.position = profile[i][0];
 			point.velocity = profile[i][1];
 			point.timeDurMs = (int) profile[i][2];
-			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
-			point.velocityOnly = false; /* set true to not do any position
+			point.profileSlotSelect = 0; /*
+											 * which set of gains would you like
+											 * to use?
+											 */
+			point.velocityOnly = false; /*
+										 * set true to not do any position
 										 * servo, just velocity feedforward
 										 */
 			point.zeroPos = false;
@@ -252,7 +258,10 @@ public class MotionProfile {
 
 			point.isLastPoint = false;
 			if ((i + 1) == totalCnt)
-				point.isLastPoint = true; /* set this to true on the last point  */
+				point.isLastPoint = true; /*
+											 * set this to true on the last
+											 * point
+											 */
 
 			_talon.pushMotionProfileTrajectory(point);
 		}
@@ -276,3 +285,5 @@ public class MotionProfile {
 		return _setValue;
 	}
 }
+
+

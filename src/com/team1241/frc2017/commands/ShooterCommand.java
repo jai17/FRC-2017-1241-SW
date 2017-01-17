@@ -7,7 +7,8 @@ import com.team1241.frc2017.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *@author Kaveesha Siribaddana
+ *@since 15/01/17
  */
 public class ShooterCommand extends Command {
 	
