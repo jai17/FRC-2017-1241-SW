@@ -120,6 +120,14 @@ public class Drivetrain extends Subsystem {
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
+		
+		rightMaster.setProfile(0);
+		rightMaster.setPID(0, 0, 0);
+		rightMaster.setF(0);
+		
+		leftMaster.setProfile(0);
+		leftMaster.setPID(0, 0, 0);
+		leftMaster.setF(0);
 	}
 
 	public void initDefaultCommand() {
@@ -132,6 +140,24 @@ public class Drivetrain extends Subsystem {
 
 	public void runRightDrive(double input) {
 		rightMaster.set(input);
+	}
+	
+	public CANTalon getRightMaster(){
+		return rightMaster;
+	}
+	
+	public CANTalon getLeftMaster(){
+		return leftMaster;
+	}
+	
+	public void motionProfileMode(){
+		rightMaster.changeControlMode(TalonControlMode.MotionProfile);
+		leftMaster.changeControlMode(TalonControlMode.MotionProfile);
+	}
+	
+	public void voltageMode(){
+		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
+		leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {

@@ -59,6 +59,12 @@ public class ElectricalConstants {
     
     public static final int INTAKE_PISTON_A									= 2;
     public static final int INTAKE_PISTON_B									= 3;
+    
+    public static final int HOPPER_PISTON_A                                 = 4;
+    public static final int HOPPER_PISTON_B 								= 5;
+    
+    public static final int GEAR_PISTON_A									= 6;
+    public static final int GEAR_PISTON_B									= 7;
 	
 	// ***************************************************************************
 	// *************************** DIGITAL SENSORS *******************************

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Conveyor extends Subsystem {
     
-    // here. Call these from Commands.
+    // NEED TO FIX COMMAND FOR CONVEYOR>
 	
 	//*********************************************************************************************
 	//*********************************** VARIABLES ***********************************************
@@ -70,7 +70,7 @@ public class Conveyor extends Subsystem {
 										NumberConstants.dConveyor);
 		
 		//Calculating the slope and the point of intersection between the graph of the conveyors RPM and the amount of power going into the motor.
-		calcline.setValues(NumberConstants.RPMS_CONVEYOR,NumberConstants.POWERS);
+		calcline.setValues(NumberConstants.RPMS_CONVEYOR,NumberConstants.POWERS_CONVEYOR);
 		kForward = calcline.getSlope();      // Calculating Slope
 		bForward = calcline.getIntercept();  // Calculating The Point of Intersection.
 		

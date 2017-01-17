@@ -44,6 +44,9 @@ public class Shooter extends Subsystem {
 
 		shooterState = false;
 
+		calcLine.setValues(NumberConstants.RPMS_SHOOTER, NumberConstants.RPMS_SHOOTER);
+		kForward = calcLine.getSlope();
+		bForward = calcLine.getIntercept();
 	}
 
 	public void initDefaultCommand() {
@@ -74,6 +77,7 @@ public class Shooter extends Subsystem {
 	public double getRPM() {
 		return optical.getRate() * 60;
 	}
+
 
 	public void setSpeed(double shotVal) {
 		leftShooter.set(shotVal);

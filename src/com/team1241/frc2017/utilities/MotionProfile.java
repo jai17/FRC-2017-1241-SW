@@ -4,11 +4,6 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Notifier;
-/**
- * @author Mahrus Kazi
- * @since 17/01/17
- * 
- */
 
 public class MotionProfile {
 
@@ -250,8 +245,8 @@ public class MotionProfile {
 			point.velocity = profile[i][1];
 			point.timeDurMs = (int) profile[i][2];
 			point.profileSlotSelect = 0; /*
-											 * which set of gains would you like to
-											 * use?
+											 * which set of gains would you like
+											 * to use?
 											 */
 			point.velocityOnly = false; /*
 										 * set true to not do any position
@@ -264,7 +259,8 @@ public class MotionProfile {
 			point.isLastPoint = false;
 			if ((i + 1) == totalCnt)
 				point.isLastPoint = true; /*
-											 * set this to true on the last point
+											 * set this to true on the last
+											 * point
 											 */
 
 			_talon.pushMotionProfileTrajectory(point);
@@ -289,3 +285,5 @@ public class MotionProfile {
 		return _setValue;
 	}
 }
+
+
