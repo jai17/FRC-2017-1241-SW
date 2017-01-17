@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon shooterMotor;
+	CANTalon leftShooterMotor;
+	CANTalon rightShooterMotor;
 
 	Counter optical;
 
@@ -31,7 +32,8 @@ public class Shooter extends Subsystem {
 	private double bForward;
 
 	public Shooter() {
-		shooterMotor = new CANTalon(ElectricalConstants.SHOOTER_MOTOR);
+		leftShooterMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		rightShooterMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 
 		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
@@ -67,7 +69,8 @@ public class Shooter extends Subsystem {
 	}
 
 	public void runShooter(double input) {
-		shooterMotor.set(input);
+		leftShooterMotor.set(input);
+		rightShooterMotor.set(-input);
 	}
 
 	public double getRPM() {
@@ -75,7 +78,8 @@ public class Shooter extends Subsystem {
 	}
 	
 	 public void setSpeed(double shotVal){
-	    	shooterMotor.set(-shotVal);	    	
+	    	leftShooterMotor.set(-shotVal);	 
+	    	rightShooterMotor.set(shotVal);
 	    }
 	
 	// OPTICAL SENSOR COMMANDS
