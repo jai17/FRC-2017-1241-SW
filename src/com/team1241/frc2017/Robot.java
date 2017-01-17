@@ -3,6 +3,7 @@ package com.team1241.frc2017;
 
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
+import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
 
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	public static Conveyor conveyor;
+	public static Hopper hopper;
 	
 	Command autonomousCommand;
 	SendableChooser chooser;
