@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon leftShooterMotor;
-	CANTalon rightShooterMotor;
+	CANTalon leftShooter;
+	CANTalon rightShooter;
 
 	Counter optical;
 
 	PIDController shooterPID;
-	
+
 	boolean shooterState;
 
 	LineRegression calcLine = new LineRegression();
@@ -32,65 +32,63 @@ public class Shooter extends Subsystem {
 	private double bForward;
 
 	public Shooter() {
-		leftShooterMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
-		rightShooterMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftShooter = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		rightShooter = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 
 		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
 
-		shooterPID = new PIDController(NumberConstants.pShooter,
-									   NumberConstants.iShooter,
-									   NumberConstants.dShooter);
-		
+		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
+
 		shooterState = false;
 
 	}
-	
+
 	public void initDefaultCommand() {
 		setDefaultCommand(new ShooterCommand());
 	}
-	
+
 	// SHOOTER COMMANDS
-	
-	public boolean getShooterState(){
+
+	public boolean getShooterState() {
 		return shooterState;
 	}
-	
-	public void setShooterState(boolean state){
+
+	public void setShooterState(boolean state) {
 		shooterState = state;
 	}
-	
-	public void setRPM(double rpm){
+
+	public void setRPM(double rpm) {
 		double output = shooterPID.calcPID(rpm, getRPM(), 50);
-		
+
 		runShooter(rpm * kForward + bForward + output);
 	}
 
 	public void runShooter(double input) {
-		leftShooterMotor.set(input);
-		rightShooterMotor.set(-input);
+		leftShooter.set(input);
+		rightShooter.set(-input);
 	}
 
 	public double getRPM() {
 		return optical.getRate() * 60;
 	}
-	
-	 public void setSpeed(double shotVal){
-	    	leftShooterMotor.set(-shotVal);	 
-	    	rightShooterMotor.set(shotVal);
-	    }
-	
+
+	public void setSpeed(double shotVal) {
+		leftShooter.set(shotVal);
+		rightShooter.set(-shotVal);
+	}
+
 	// OPTICAL SENSOR COMMANDS
-	
+
 	public int getOptic() {
 		return optical.get();
-	}		
-	
+	}
+
 	// SHOOTER PID
-	
-	public void resetPID(){
+
+	public void resetPID() {
 		shooterPID.resetPID();
 	}
 }

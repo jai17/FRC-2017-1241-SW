@@ -5,7 +5,8 @@ import com.team1241.frc2017.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *@author Kaveesha Siribaddana
+ *@since 14/01/17
  */
 public class IntakeCommand extends Command {
 

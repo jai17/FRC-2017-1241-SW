@@ -38,7 +38,9 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
-    	System.out.println("Gyro:" + Robot.drive.getYaw() + "Pitch:" + Robot.drive.getPitch() + " Roll:" + Robot.drive.getRoll());
+    	System.out.println("Gyro:" + Robot.drive.getYaw() 
+    					 + "Pitch:" + Robot.drive.getPitch() 
+    					 + "Roll: " + Robot.drive.getRoll());
     }
 
     // Make this return true when this Command no longer needs to run execute()
