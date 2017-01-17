@@ -9,46 +9,43 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HopperCommand extends Command {
 
-    public HopperCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.hopper);
-        
-    }
+	public HopperCommand() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.hopper);
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
-    
-    /*if (Robot.oi.getToolRightBumper()) {
-	Robot.hopper.extendHopper();;
-   } 
-   else () {
-   Robot.hopper.retractHopper(); 
-   } */
-    
-    /*if (Robot.oi.getToolRightBumper()) {
-	Robot.hopper.extendGear();;
-   	} 
-    else () {
-    Robot.hopper.retractGear(); 
-    } */
-    
-    
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		if (Robot.oi.getToolRightBumper()) {
+			Robot.hopper.ExtendHopper();
+		} else {
+			Robot.hopper.RetractHopper();
+		}
+
+		if (Robot.oi.getToolRightBumper()) {
+			Robot.hopper.ExtendGear();
+		} else {
+			Robot.hopper.RetractGear();
+		}
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
