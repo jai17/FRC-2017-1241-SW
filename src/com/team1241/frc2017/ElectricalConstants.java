@@ -34,7 +34,8 @@ public class ElectricalConstants {
 	// **************************** SHOOTER MOTORS *******************************
 	// ***************************************************************************
 	
-	public static final int SHOOTER_MOTOR									= 7;
+	public static final int LEFT_SHOOTER_MOTOR									= 7;
+	public static final int RIGHT_SHOOTER_MOTOR								= 8;
 	
 	// ***************************************************************************
 	// *************************** OPTICAL ENCODER *******************************
