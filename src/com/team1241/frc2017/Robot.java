@@ -108,6 +108,10 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
+	
+	public void updateSmartDashboard(){
+		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+	}
 
 	/**
 	 * This function is called periodically during operator control

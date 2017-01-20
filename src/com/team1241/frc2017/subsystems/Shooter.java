@@ -22,7 +22,7 @@ public class Shooter extends Subsystem {
 
 	Counter optical;
 
-	PIDController shooterPID;
+	public PIDController shooterPID;
 
 	boolean shooterState;
 
