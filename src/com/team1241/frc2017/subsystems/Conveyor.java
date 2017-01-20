@@ -97,12 +97,12 @@ public class Conveyor extends Subsystem {
     }
     
     // Function to control the Piston
-    public void extendPiston(){
+    public void openClaw(){
     	claw.set(DoubleSolenoid.Value.kForward);
     }
     
     // Function to control the Piston
-    public void retractPiston(){
+    public void closeClaw(){
     	claw.set(DoubleSolenoid.Value.kReverse);
     }
     
