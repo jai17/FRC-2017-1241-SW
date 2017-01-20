@@ -4,7 +4,7 @@ import com.team1241.frc2017.Robot;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
-/**
+/*
  *
  */
 public class ConveyorPistonCommands extends InstantCommand {
