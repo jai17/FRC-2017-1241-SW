@@ -29,10 +29,13 @@ public class ShooterCommand extends Command {
     
     	if(Robot.oi.getToolLeftBumper()){
     		rpm.start();
-    	} else if (Robot.oi.getToolBackButton()){
-    		Robot.shooter.setShooterState(false);
+    		Robot.conveyor.openClaw();
+    	} 
+    	else{
+    		rpm.cancel();
+    		Robot.conveyor.closeClaw();
     	}
-			
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()
