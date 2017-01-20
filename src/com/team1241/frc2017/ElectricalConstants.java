@@ -13,7 +13,7 @@ package com.team1241.frc2017;
 public class ElectricalConstants {
 
 	// ***************************************************************************
-	// ****************************** DRIVE MOTORS *******************************
+	// *********************** DRIVE MOTORS [TALONS] *****************************
 	// ***************************************************************************
 
 	public static final int LEFT_DRIVE_FRONT 								= 1;
@@ -23,19 +23,30 @@ public class ElectricalConstants {
 	public static final int RIGHT_DRIVE_BACK 								= 4;
 	
 	// ***************************************************************************
-	// ***************************** INTAKE MOTORS *******************************
+	// ************************* INTAKE MOTORS [SPARKS]***************************
 	// ***************************************************************************
 	
 	public static final int MAIN_INTAKE_ROLLERS								= 0;
 	public static final int SIDE_INTAKE_ROLLERS                             = 1;
 	
 	// ***************************************************************************
-
-	// **************************** SHOOTER MOTORS *******************************
+	// ********************** SHOOTER MOTORS [TALONS]*****************************
 	// ***************************************************************************
 	
 	public static final int LEFT_SHOOTER_MOTOR									= 7;
 	public static final int RIGHT_SHOOTER_MOTOR								= 8;
+	
+	// ***************************************************************************
+	// ************************* HANG MOTORS [TALONS] ****************************
+	// ***************************************************************************
+	public static final int LEFT_HANG_MOTOR									= 9;
+	public static final int RIGHT_HANG_MOTOR								= 10;
+	
+	// *********************** CONVEYOR MOTORS [VICTORS]**************************
+	// ***************************************************************************
+	
+	public static final int AGITATOR_MOTOR 									= 5;
+	public static final int CONVEYOR_MOTOR									= 6;
 	
 	// ***************************************************************************
 	// *************************** OPTICAL ENCODER *******************************
@@ -43,12 +54,11 @@ public class ElectricalConstants {
 	
 	public static final int OPTICAL_SENSOR                                  = 9;
 	
-
-	// **************************** CONVEYOR MOTORS ******************************
+	// ***************************************************************************
+	// *************************** HANG SERVO MOTOR*******************************
 	// ***************************************************************************
 	
-	public static final int AGITATOR_MOTOR 									= 5;
-	public static final int CONVEYOR_MOTOR									= 6;
+	public static final int HANG_SERVO_MOTOR 								= 10;
 	
 	// ***************************************************************************
 	// ******************************* PISTONS ***********************************
@@ -65,7 +75,10 @@ public class ElectricalConstants {
     
     public static final int GEAR_PISTON_A									= 6;
     public static final int GEAR_PISTON_B									= 7;
-	
+    
+    public static final int HANG_PISTON_A									= 8;
+    public static final int HANG_PISTON_B									= 9;
+    
 	// ***************************************************************************
 	// *************************** DIGITAL SENSORS *******************************
 	// ***************************************************************************
