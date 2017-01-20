@@ -9,6 +9,7 @@ import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static Hopper hopper;
 	public static Hang hang;
 	
+	Preferences pref;
 	public static double rpm;
 	public static double power;
 	public static double powerC;
