@@ -1,6 +1,7 @@
 
 package com.team1241.frc2017;
 
+import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
 import com.team1241.frc2017.subsystems.Hang;
@@ -9,6 +10,7 @@ import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,8 +36,14 @@ public class Robot extends IterativeRobot {
 	public static Hopper hopper;
 	public static Hang hang;
 	
+	Preferences pref;
+	public static double rpm;
+	public static double power;
+	public static double powerC;
+	public static double p;
+	
 	Command autonomousCommand;
-	SendableChooser chooser;
+	SendableChooser autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,10 +56,9 @@ public class Robot extends IterativeRobot {
 		intake = new Intake();
 		shooter = new Shooter();
 		
-		chooser = new SendableChooser();
+		autoChooser = new SendableChooser();
 
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		autoChooser.addDefault("No Auton", new NoAuto());
 	}
 
 	/**
@@ -79,7 +86,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		autonomousCommand = (Command) chooser.getSelected();
+		autonomousCommand = (Command) autoChooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -107,6 +114,18 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+	}
+	
+	public void updateSmartDashboard(){
+		rpm = pref.getDouble("RPM", 0.0);
+		power = pref.getDouble("Shooter Power", 0.0);
+		powerC = pref.getDouble("Conveyor Power", 0.0);
+		p = pref.getDouble("Shooter pGain", 0.0);
+		
+		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		SmartDashboard.putNumber("Set RPM", rpm);
+		SmartDashboard.putNumber("Set Power", power);
 	}
 
 	/**
