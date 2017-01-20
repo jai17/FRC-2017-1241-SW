@@ -18,10 +18,11 @@ public class HopperPistonCommands extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	if(actuate)
+    	if(actuate){
     		Robot.hopper.ExtendHopper();
-    	else
+    	}else{
     		Robot.hopper.RetractHopper();
+    	}
     }
 
 }

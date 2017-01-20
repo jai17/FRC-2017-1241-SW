@@ -18,10 +18,11 @@ public class IntakePistonCommands extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	if(actuate)
+    	if(actuate){
     		Robot.intake.extendIntake();
-    	else
+    	}else{
     		Robot.intake.retractIntake();
+    	}
     }
 
 }

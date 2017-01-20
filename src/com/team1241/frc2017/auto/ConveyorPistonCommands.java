@@ -18,10 +18,11 @@ public class ConveyorPistonCommands extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	if(actuate)
+    	if(actuate){
     		Robot.conveyor.openClaw();
-    	else
+    	}else{
     		Robot.conveyor.closeClaw();
+    	}
     }
 
 }
