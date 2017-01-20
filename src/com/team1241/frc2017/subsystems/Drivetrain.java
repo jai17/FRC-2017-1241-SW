@@ -8,8 +8,6 @@ import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.TankDrive;
 import com.team1241.frc2017.pid.PIDController;
-import com.team1241.frc2017.utilities.GeneratedProfile;
-import com.team1241.frc2017.utilities.MotionProfile;
 import com.team1241.frc2017.utilities.Nav6;
 
 import edu.wpi.first.wpilibj.SerialPort;
@@ -29,9 +27,6 @@ public class Drivetrain extends Subsystem {
 	private CANTalon leftSlave;
 	private CANTalon rightMaster;
 	private CANTalon rightSlave;
-
-	MotionProfile leftProfile;
-	MotionProfile rightProfile;
 
 	/** Encoders on the drive */
 	private boolean leftEncoderConnected = false;
@@ -114,9 +109,6 @@ public class Drivetrain extends Subsystem {
 			break;
 		}
 
-		leftProfile = new MotionProfile(leftMaster, GeneratedProfile.Points, GeneratedProfile.kNumPoints);
-		rightProfile = new MotionProfile(rightMaster, GeneratedProfile.Points, GeneratedProfile.kNumPoints);
-
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
@@ -178,11 +170,11 @@ public class Drivetrain extends Subsystem {
 	// ENCODER FUNCTIONS
 
 	public double getLeftDriveEncoder() {
-		return leftMaster.getPosition();
+		return leftMaster.getPosition()*ElectricalConstants.ROTATIONS_TO_INCHES;
 	}
 
 	public double getRightDriveEncoder() {
-		return rightMaster.getPosition();
+		return rightMaster.getPosition()*ElectricalConstants.ROTATIONS_TO_INCHES;
 	}
 
 	public double getAverageDistance() {
@@ -195,35 +187,6 @@ public class Drivetrain extends Subsystem {
 
 	public boolean isRightEncoderConnected() {
 		return rightEncoderConnected;
-	}
-
-	public void setControlMode(TalonControlMode state) {
-		if (state == CANTalon.TalonControlMode.MotionProfile) {
-			leftMaster.setProfile(1);
-			rightMaster.setProfile(1);
-		} else {
-			leftMaster.setProfile(0);
-			rightMaster.setProfile(0);
-
-			leftMaster.changeControlMode(state);
-			rightMaster.changeControlMode(state);
-		}
-	}
-
-	public TalonControlMode getLeftDriveControlMode() {
-		return leftMaster.getControlMode();
-	}
-
-	public TalonControlMode getRightDriveControlMode() {
-		return rightMaster.getControlMode();
-	}
-
-	public MotionProfile getLeftDriveProfile() {
-		return leftProfile;
-	}
-
-	public MotionProfile getRightDriveProfile() {
-		return rightProfile;
 	}
 
 	public void resetEncoders() {

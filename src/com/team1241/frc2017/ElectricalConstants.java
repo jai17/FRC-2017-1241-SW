@@ -82,5 +82,12 @@ public class ElectricalConstants {
   	public static final double conveyorEncoderPulsePerRot = conveyorPulsePerRotation*conveyorGearRatio; //pulse per rotation * gear ratio
   	public static final double conveyorEncoderDistPerTick =(Math.PI*2*conveyorPullyRadius)/conveyorEncoderPulsePerRot;
   	public static final boolean conveyorEncoderReverse = false;
+  	
+    //**************************************************************************
+    //************************* DRIVE ENCODER CONSTANTS ************************
+    //**************************************************************************
+	private static final double encoderGearRatio 					     = 42/36;
+	private static final double wheelRadius								 = 2;
+	public static final double ROTATIONS_TO_INCHES 		= 2*Math.PI*wheelRadius*encoderGearRatio;
 
 }
