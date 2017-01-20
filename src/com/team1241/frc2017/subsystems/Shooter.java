@@ -8,7 +8,6 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
