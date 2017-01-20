@@ -1,6 +1,7 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *@since 14/01/17
  */
 public class IntakeCommand extends Command {
+	
+	ToggleBoolean toggle = new ToggleBoolean();
 
 	public IntakeCommand() {
 		requires(Robot.intake);
@@ -27,11 +30,12 @@ public class IntakeCommand extends Command {
 			Robot.intake.outtake(1);
 		}
 		
-		if (Robot.oi.getToolRightBumper()) {
-			Robot.intake.extendIntake();;
-		} else if (Robot.oi.getToolRightTrigger()) {
+		toggle.set(Robot.oi.getToolRightBumper());
+		
+		if (toggle.get())
+			Robot.intake.extendIntake();
+		else
 			Robot.intake.retractIntake();
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
