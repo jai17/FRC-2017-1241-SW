@@ -34,6 +34,11 @@ public class Robot extends IterativeRobot {
 	public static Hopper hopper;
 	public static Hang hang;
 	
+	public static double rpm;
+	public static double power;
+	public static double powerC;
+	public static double p;
+	
 	Command autonomousCommand;
 	SendableChooser chooser;
 
@@ -110,7 +115,15 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void updateSmartDashboard(){
+		rpm = pref.getDouble("RPM", 0.0);
+		power = pref.getDouble("Shooter Power", 0.0);
+		powerC = pref.getDouble("Conveyor Power", 0.0);
+		p = pref.getDouble("Shooter pGain", 0.0);
+		
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		SmartDashboard.putNumber("Set RPM", rpm);
+		SmartDashboard.putNumber("Set Power", power);
 	}
 
 	/**
