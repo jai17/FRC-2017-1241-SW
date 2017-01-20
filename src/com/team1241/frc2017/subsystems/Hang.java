@@ -1,6 +1,6 @@
 package com.team1241.frc2017.subsystems;
+import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
