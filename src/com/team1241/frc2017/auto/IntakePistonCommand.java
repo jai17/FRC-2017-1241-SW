@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class ConveyorPistonCommands extends InstantCommand {
+public class IntakePistonCommand extends InstantCommand {
 
 	private boolean actuate;
 	
-    public ConveyorPistonCommands(boolean actuate) {
+    public IntakePistonCommand(boolean actuate) {
         super();
         this.actuate = actuate;
     }
@@ -19,9 +19,9 @@ public class ConveyorPistonCommands extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	if(actuate)
-    		Robot.conveyor.openClaw();
+    		Robot.intake.extendIntake();
     	else
-    		Robot.conveyor.closeClaw();
+    		Robot.intake.retractIntake();
     }
 
 }
