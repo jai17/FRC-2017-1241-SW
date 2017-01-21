@@ -1,6 +1,7 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HopperCommand extends Command {
 
+	ToggleBoolean toggle = new ToggleBoolean();
+	
 	public HopperCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.hopper);
@@ -22,13 +25,7 @@ public class HopperCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		if (Robot.oi.getToolRightBumper()) {
-			Robot.hopper.ExtendHopper();
-		} else {
-			Robot.hopper.RetractHopper();
-		}
-
-		if (Robot.oi.getToolRightBumper()) {
+		if (toggle.get()) {
 			Robot.hopper.ExtendGear();
 		} else {
 			Robot.hopper.RetractGear();
