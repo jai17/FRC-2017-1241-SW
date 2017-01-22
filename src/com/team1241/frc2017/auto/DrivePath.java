@@ -39,8 +39,9 @@ public class DrivePath extends Command {
 	 * @param speed
 	 *            The speed the robot will travel at (0.0 - 1.0)
 	 */
-	public DrivePath(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, double timeOut,
-			double speed) {
+	public DrivePath(Point startPoint, Point controlPoint1,
+				     Point controlPoint2, Point endPoint, 
+				     double timeOut, double speed) {
 
 		this(startPoint, controlPoint1, controlPoint2, endPoint, timeOut, speed, false);
 	}
