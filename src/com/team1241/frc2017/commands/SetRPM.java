@@ -22,13 +22,17 @@ public class SetRPM extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.resetPID();
+    	Robot.shooter.resetPID();	
     	Robot.shooter.setShooterState(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.setRPM(rpm);
+    	if(Robot.shooter.encoderConnected())
+    		Robot.shooter.setShooter(rpm);
+    	else{
+    		Robot.shooter.useFeedForward(rpm); // A safety if the encoder is not connected (Uses pre-tuned values)
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,13 +43,13 @@ public class SetRPM extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.shooter.resetPID();
-    	Robot.shooter.setSpeed(0);
+    	Robot.shooter.stopShooter();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.shooter.resetPID();
-    	Robot.shooter.setSpeed(0);
+    	Robot.shooter.stopShooter();
     }
 }

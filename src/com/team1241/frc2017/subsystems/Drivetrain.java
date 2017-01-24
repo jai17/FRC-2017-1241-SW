@@ -37,10 +37,10 @@ public class Drivetrain extends Subsystem {
 	private Nav6 gyro;
 
 	/** The drive PID controller. */
-	public PIDController drivePID;
+	private PIDController drivePID;
 
 	/** The gyro PID conteroller. */
-	public PIDController gyroPID;
+	private PIDController gyroPID;
 
 	/**
 	 * Instantiates a new drivetrain subsystem, this includes initializing all
@@ -172,6 +172,19 @@ public class Drivetrain extends Subsystem {
 
 		runLeftDrive(speed + angle);
 		runRightDrive(-speed + angle);
+	}
+	
+	public boolean drivePIDDone() {
+		return drivePID.isDone();
+	}
+	
+	public boolean gyroPIDDone() {
+		return gyroPID.isDone();
+	}
+	
+	public void resetPID(){
+		drivePID.resetPID();
+		gyroPID.resetPID();
 	}
 
 	// ENCODER FUNCTIONS

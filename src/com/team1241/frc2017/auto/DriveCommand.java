@@ -38,22 +38,18 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
-    	System.out.println("Gyro:" + Robot.drive.getYaw() 
-    					 + "Pitch:" + Robot.drive.getPitch() 
-    					 + "Roll: " + Robot.drive.getRoll());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();//Robot.drive.drivePID.isDone() || isTimedOut();
+    	return Robot.drive.drivePIDDone() || isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drive.runLeftDrive(0);
     	Robot.drive.runRightDrive(0);
-    	Robot.drive.drivePID.resetPID();
-    	Robot.drive.gyroPID.resetPID();
+    	Robot.drive.resetPID();
     }
 
     // Called when another command which requires one or more of the same
@@ -61,7 +57,6 @@ public class DriveCommand extends Command {
     protected void interrupted() {
     	Robot.drive.runLeftDrive(0);
 		Robot.drive.runRightDrive(0);
-		Robot.drive.drivePID.resetPID();
-		Robot.drive.gyroPID.resetPID();
+		Robot.drive.resetPID();
     }
 }

@@ -1,6 +1,9 @@
 package com.team1241.frc2017.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.FeedbackDeviceStatus;
+import com.ctre.CANTalon.TalonControlMode;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ShooterCommand;
@@ -16,10 +19,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon leftShooter;
-	CANTalon rightShooter;
+	CANTalon rightMaster;
+	CANTalon leftSlave;
 
-	Counter optical;
+	//Counter optical;
 
 	public PIDController shooterPID;
 
@@ -29,15 +32,41 @@ public class Shooter extends Subsystem {
 
 	private double kForward;
 	private double bForward;
+	
+	private boolean encoderConnected = false;
 
 	public Shooter() {
-		leftShooter = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
-		rightShooter = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		rightMaster = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		rightMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightMaster.reverseSensor(false);
+		
+		leftSlave = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		leftSlave.changeControlMode(TalonControlMode.Follower);
+		leftSlave.set(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftSlave.reverseOutput(true);
+				
+		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		
+		switch (rightStatus) {
+		case FeedbackStatusPresent:
+			encoderConnected = true;
+			break;
+		case FeedbackStatusNotPresent:
+			break;
+		case FeedbackStatusUnknown:
+			break;
+		}
+		
+		rightMaster.setProfile(0);
+		rightMaster.setPID(0, 0, 0);
+		rightMaster.setF(0);
+		
+		rightMaster.changeControlMode(TalonControlMode.Speed);
 
-		optical = new Counter();
+		/*optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
 		optical.setUpDownCounterMode();
-		optical.setDistancePerPulse(1);
+		optical.setDistancePerPulse(1);*/
 
 		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
 
@@ -65,29 +94,43 @@ public class Shooter extends Subsystem {
 	public void setRPM(double rpm) {
 		double output = shooterPID.calcPID(rpm, getRPM(), 50);
 
-		runShooter(rpm * kForward + bForward + output);
+		setShooter(rpm * kForward + bForward + output);
+	}
+	
+	public void useFeedForward(double rpm) {
+		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
+		setShooter(rpm * kForward + bForward);
 	}
 
-	public void runShooter(double input) {
-		leftShooter.set(input);
-		rightShooter.set(-input);
+	public void setShooter(double input) {
+		rightMaster.changeControlMode(TalonControlMode.Speed);
+		rightMaster.set(input);
 	}
-
-	public double getRPM() {
-		return optical.getRate() * 60;
+	
+	public void stopShooter(){
+		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
+		rightMaster.set(0);
 	}
-
-
-	public void setSpeed(double shotVal) {
-		leftShooter.set(shotVal);
-		rightShooter.set(-shotVal);
+	
+	// MAG ENCODER METHODS
+	
+	public double getRPM(){
+		return rightMaster.getSpeed();
+	}
+	
+	public boolean encoderConnected(){
+		return encoderConnected;
 	}
 
 	// OPTICAL SENSOR COMMANDS
 
-	public int getOptic() {
+	/*public int getOptic() {
 		return optical.get();
 	}
+	
+	public double getRPM() {
+		return optical.getRate() * 60;
+	}*/
 
 	// SHOOTER PID
 
