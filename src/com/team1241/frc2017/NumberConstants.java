@@ -52,8 +52,8 @@ public class NumberConstants {
 	public static final int[] RPMS_CONVEYOR = new int[] {4000, 4100, 4250, 4500, 5000};
 	public static final double[] POWERS_CONVEYOR = new double[] { 0.6, 0.7, 0.8, 0.9, 1.0};
 	
-	public static final int[] RPMS_SHOOTER = new int[] {4000, 4100, 4250, 4500, 5000};
-	public static final double[] POWERS_SHOOTER = new double[] { 0.6, 0.7, 0.8, 0.9, 1.0};
+	public static final int[] RPMS_SHOOTER = new int[] { 4000, 4300, 4600, 5000, 5500 };
+	public static final double[] POWERS_SHOOTER = new double[] { 0.72, 0.77, 0.83, 0.91, 0.97 };
 	
 	//**************************************************************************
     //******************************* RPM VALUES *******************************

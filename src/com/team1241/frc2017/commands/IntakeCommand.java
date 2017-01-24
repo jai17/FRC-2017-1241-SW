@@ -6,11 +6,11 @@ import com.team1241.frc2017.utilities.ToggleBoolean;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *@author Kaveesha Siribaddana
- *@since 14/01/17
+ * @author Kaveesha Siribaddana
+ * @since 14/01/17
  */
 public class IntakeCommand extends Command {
-	
+
 	ToggleBoolean toggle = new ToggleBoolean();
 
 	public IntakeCommand() {
@@ -29,9 +29,9 @@ public class IntakeCommand extends Command {
 		} else if (Robot.oi.getToolAButton()) {
 			Robot.intake.outtake(-1);
 		}
-		
+
 		toggle.set(Robot.oi.getToolRightBumper());
-		
+
 		if (toggle.get())
 			Robot.intake.extendIntake();
 		else
