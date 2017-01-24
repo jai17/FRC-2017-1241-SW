@@ -1,4 +1,4 @@
-package com.team1241.frc2017.commands;
+package com.team1241.frc2017.auto;
 
 import com.team1241.frc2017.Robot;
 import com.team1241.frc2017.utilities.MotionProfile;

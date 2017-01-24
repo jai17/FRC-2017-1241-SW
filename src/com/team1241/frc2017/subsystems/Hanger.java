@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Hang extends Subsystem {
+public class Hanger extends Subsystem {
     
 	//*********************************************************************************************
 	//*********************************** VARIABLES ***********************************************
@@ -21,7 +21,7 @@ public class Hang extends Subsystem {
 	
 	Servo fingerservo;
 	
-	public Hang(){
+	public Hanger(){
 		
 		hangmotorleft = new CANTalon(ElectricalConstants.LEFT_HANG_MOTOR);
 		hangmotorright = new CANTalon(ElectricalConstants.RIGHT_HANG_MOTOR);

@@ -24,6 +24,7 @@ public class HopperCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		toggle.set(Robot.oi.getToolLeftBumper());
 
 		if (toggle.get()) {
 			Robot.hopper.ExtendGear();

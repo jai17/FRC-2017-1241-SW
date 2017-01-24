@@ -4,7 +4,7 @@ package com.team1241.frc2017;
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
-import com.team1241.frc2017.subsystems.Hang;
+import com.team1241.frc2017.subsystems.Hanger;
 import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Conveyor conveyor;
 	public static Hopper hopper;
-	public static Hang hang;
+	public static Hanger hanger;
 	
 	Preferences pref;
 	public static double rpm;
@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
 		drive = new Drivetrain();
 		intake = new Intake();
 		shooter = new Shooter();
+		hopper = new Hopper();
+		hanger = new Hanger();
 		
 		autoChooser = new SendableChooser();
 
@@ -115,18 +117,6 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
-	
-	public void updateSmartDashboard(){
-		rpm = pref.getDouble("RPM", 0.0);
-		power = pref.getDouble("Shooter Power", 0.0);
-		powerC = pref.getDouble("Conveyor Power", 0.0);
-		p = pref.getDouble("Shooter pGain", 0.0);
-		
-		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
-		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
-		SmartDashboard.putNumber("Set RPM", rpm);
-		SmartDashboard.putNumber("Set Power", power);
-	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -140,5 +130,17 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	public void updateSmartDashboard(){
+		rpm = pref.getDouble("RPM", 0.0);
+		power = pref.getDouble("Shooter Power", 0.0);
+		powerC = pref.getDouble("Conveyor Power", 0.0);
+		p = pref.getDouble("Shooter pGain", 0.0);
+		
+		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		SmartDashboard.putNumber("Set RPM", rpm);
+		SmartDashboard.putNumber("Set Power", power);
 	}
 }

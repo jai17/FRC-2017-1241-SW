@@ -27,7 +27,7 @@ public class IntakeCommand extends Command {
 		if (Robot.oi.getToolXButton()) {
 			Robot.intake.intake(1);
 		} else if (Robot.oi.getToolAButton()) {
-			Robot.intake.outtake(1);
+			Robot.intake.outtake(-1);
 		}
 		
 		toggle.set(Robot.oi.getToolRightBumper());
