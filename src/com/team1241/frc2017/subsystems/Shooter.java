@@ -22,7 +22,7 @@ public class Shooter extends Subsystem {
 	CANTalon rightMaster;
 	CANTalon leftSlave;
 
-	//Counter optical;
+	Counter optical;
 
 	public PIDController shooterPID;
 
@@ -33,29 +33,16 @@ public class Shooter extends Subsystem {
 	private double kForward;
 	private double bForward;
 	
-	private boolean encoderConnected = false;
+
 
 	public Shooter() {
 		rightMaster = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		rightMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightMaster.reverseSensor(false);
 		
 		leftSlave = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 		leftSlave.changeControlMode(TalonControlMode.Follower);
 		leftSlave.set(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 		leftSlave.reverseOutput(true);
-				
-		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		
-		switch (rightStatus) {
-		case FeedbackStatusPresent:
-			encoderConnected = true;
-			break;
-		case FeedbackStatusNotPresent:
-			break;
-		case FeedbackStatusUnknown:
-			break;
-		}
 		
 		rightMaster.setProfile(0);
 		rightMaster.setPID(0, 0, 0);
@@ -63,10 +50,10 @@ public class Shooter extends Subsystem {
 		
 		rightMaster.changeControlMode(TalonControlMode.Speed);
 
-		/*optical = new Counter();
+		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
 		optical.setUpDownCounterMode();
-		optical.setDistancePerPulse(1);*/
+		optical.setDistancePerPulse(1);
 
 		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
 
@@ -110,27 +97,15 @@ public class Shooter extends Subsystem {
 	public void stopShooter(){
 		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
 		rightMaster.set(0);
-	}
+	}	
 	
-	// MAG ENCODER METHODS
-	
-	public double getRPM(){
-		return rightMaster.getSpeed();
-	}
-	
-	public boolean encoderConnected(){
-		return encoderConnected;
-	}
-
-	// OPTICAL SENSOR COMMANDS
-
-	/*public int getOptic() {
+	public int getOptic() {
 		return optical.get();
 	}
 	
 	public double getRPM() {
 		return optical.getRate() * 60;
-	}*/
+	}
 
 	// SHOOTER PID
 
