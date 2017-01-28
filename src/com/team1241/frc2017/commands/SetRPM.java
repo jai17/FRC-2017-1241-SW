@@ -28,28 +28,24 @@ public class SetRPM extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.shooter.encoderConnected())
-    		Robot.shooter.setShooter(rpm);
-    	else{
-    		Robot.shooter.useFeedForward(rpm); // A safety if the encoder is not connected (Uses pre-tuned values)
-    	}
+    	Robot.shooter.setRPM(rpm);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
+    	return !Robot.shooter.getShooterState();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.shooter.resetPID();
-    	Robot.shooter.stopShooter();
+    	Robot.shooter.setShooter(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.shooter.resetPID();
-    	Robot.shooter.stopShooter();
+    	Robot.shooter.setShooter(0);
     }
 }

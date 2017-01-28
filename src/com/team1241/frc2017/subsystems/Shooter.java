@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon rightMaster;
-	CANTalon leftSlave;
+	CANTalon rightMotor;
+	CANTalon leftMotor;
 
 	Counter optical;
 
@@ -36,19 +36,8 @@ public class Shooter extends Subsystem {
 
 
 	public Shooter() {
-		rightMaster = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		rightMaster.reverseSensor(false);
-		
-		leftSlave = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
-		leftSlave.changeControlMode(TalonControlMode.Follower);
-		leftSlave.set(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		leftSlave.reverseOutput(true);
-		
-		rightMaster.setProfile(0);
-		rightMaster.setPID(0, 0, 0);
-		rightMaster.setF(0);
-		
-		rightMaster.changeControlMode(TalonControlMode.Speed);
+		rightMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 
 		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
@@ -83,21 +72,12 @@ public class Shooter extends Subsystem {
 
 		setShooter(rpm * kForward + bForward + output);
 	}
-	
-	public void useFeedForward(double rpm) {
-		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
-		setShooter(rpm * kForward + bForward);
-	}
 
 	public void setShooter(double input) {
-		rightMaster.changeControlMode(TalonControlMode.Speed);
-		rightMaster.set(input);
+		rightMotor.set(input);
+		leftMotor.set(-input);
 	}
-	
-	public void stopShooter(){
-		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
-		rightMaster.set(0);
-	}	
+		
 	
 	public int getOptic() {
 		return optical.get();

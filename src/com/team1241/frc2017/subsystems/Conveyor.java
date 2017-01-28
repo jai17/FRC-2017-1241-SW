@@ -2,6 +2,7 @@ package com.team1241.frc2017.subsystems;
 
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
+import com.team1241.frc2017.commands.ConveyorCommand;
 import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
@@ -82,8 +83,7 @@ public class Conveyor extends Subsystem {
 	//*********************************************************************************************		
 	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ConveyorCommand());
 	}
     
     // Function to control the agitator. 

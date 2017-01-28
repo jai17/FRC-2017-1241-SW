@@ -20,20 +20,34 @@ public class ConveyorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	/*  if (Robot.oi.getToolYButton()) {
+    if (Robot.oi.getToolYButton()) {
     		Robot.conveyor.agitatorMotor(1);
      		}
+    	else if (Robot.oi.getToolYButton()) {
+    		Robot.conveyor.agitatorMotor(-1);
+     		}
+    	else{
+    		Robot.conveyor.agitatorMotor(0);
+    		}	
+    		
+    		
+    	if (Robot.oi.getToolXButton()) {
+    		Robot.conveyor.conveyorMotor(1);
+    		}
+    	else if (Robot.oi.getToolXButton()) {
+    		Robot.conveyor.conveyorMotor(-1);
+    		}
+		else{
+			Robot.conveyor.conveyorMotor(0);
+			}
+    		
     	
-    		if (Robot.oi.getToolXButton()) {
-    			Robot.conveyor.conveyorMotor(1);
-    		} */
-    	
-    	/*if (Robot.oi.getToolRightBumper()) {
-			Robot.conveyor.extendPiston();;
+    	if (Robot.oi.getToolRightBumper()) {
+			Robot.conveyor.openClaw();
 		   } 
-		   else if (Robot.oi.getToolRightTrigger()) {
-		   Robot.conveyor.retractPiston(); 
-		   } */
+		 else if (Robot.oi.getToolRightTrigger()) {
+		   Robot.conveyor.closeClaw(); 
+		   } 
     		
     }
 

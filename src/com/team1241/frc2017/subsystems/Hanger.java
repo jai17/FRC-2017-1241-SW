@@ -1,6 +1,8 @@
 package com.team1241.frc2017.subsystems;
 import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
+import com.team1241.frc2017.commands.HangerCommand;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,44 +16,39 @@ public class Hanger extends Subsystem {
 	//*********************************** VARIABLES ***********************************************
 	//*********************************************************************************************
 	
-	CANTalon hangmotorleft;
-	CANTalon hangmotorright;
+	CANTalon hangMotorLeft;
+	CANTalon hangMotorRight;
 	
 	DoubleSolenoid hangpiston;
 	
-	Servo fingerservo;
 	
 	public Hanger(){
 		
-		hangmotorleft = new CANTalon(ElectricalConstants.LEFT_HANG_MOTOR);
-		hangmotorright = new CANTalon(ElectricalConstants.RIGHT_HANG_MOTOR);
+		hangMotorLeft = new CANTalon(ElectricalConstants.LEFT_HANG_MOTOR);
+		hangMotorRight = new CANTalon(ElectricalConstants.RIGHT_HANG_MOTOR);
 		
 		hangpiston = new DoubleSolenoid(ElectricalConstants.HANG_PISTON_A,
 										ElectricalConstants.HANG_PISTON_B);
 	
-		fingerservo = new Servo(ElectricalConstants.HANG_SERVO_MOTOR);
 	}
 	
-	public void HangMotor(double input){
-	    	hangmotorleft.set(input);
-	    	hangmotorright.set(input);
+	public void hangMotor(double input){
+	    	hangMotorLeft.set(input);
+	    	hangMotorRight.set(input);
     }
 	
-	public void hangPiston(){
+	public void extendHangPiston(){
     	hangpiston.set(DoubleSolenoid.Value.kForward);
     }		
 		
-	public void retractPiston(){
+	public void retractHangPiston(){
     	hangpiston.set(DoubleSolenoid.Value.kReverse);
     }
 	
-	public void moveservo(double input){
-		fingerservo.set(input);
 		
-	}
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        
+        setDefaultCommand(new HangerCommand());
     }
 }
 
