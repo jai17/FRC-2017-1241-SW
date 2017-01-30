@@ -1,54 +1,46 @@
 package com.team1241.frc2017.subsystems;
+
 import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.commands.HangerCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class Hanger extends Subsystem {
-    
-	//*********************************************************************************************
-	//*********************************** VARIABLES ***********************************************
-	//*********************************************************************************************
-	
+
 	CANTalon hangMotorLeft;
 	CANTalon hangMotorRight;
-	
+
 	DoubleSolenoid hangpiston;
-	
-	
-	public Hanger(){
-		
+
+	public Hanger() {
+
 		hangMotorLeft = new CANTalon(ElectricalConstants.LEFT_HANG_MOTOR);
 		hangMotorRight = new CANTalon(ElectricalConstants.RIGHT_HANG_MOTOR);
-		
-		hangpiston = new DoubleSolenoid(ElectricalConstants.HANG_PISTON_A,
-										ElectricalConstants.HANG_PISTON_B);
-	
-	}
-	
-	public void hangMotor(double input){
-	    	hangMotorLeft.set(input);
-	    	hangMotorRight.set(input);
-    }
-	
-	public void extendHangPiston(){
-    	hangpiston.set(DoubleSolenoid.Value.kForward);
-    }		
-		
-	public void retractHangPiston(){
-    	hangpiston.set(DoubleSolenoid.Value.kReverse);
-    }
-	
-		
-    public void initDefaultCommand() {
-        
-        setDefaultCommand(new HangerCommand());
-    }
-}
 
+		hangpiston = new DoubleSolenoid(ElectricalConstants.HANG_PISTON_A, ElectricalConstants.HANG_PISTON_B);
+
+	}
+
+	public void hangMotor(double input) {
+		hangMotorLeft.set(input);
+		hangMotorRight.set(input);
+	}
+
+	public void extendHangPiston() {
+		hangpiston.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void retractHangPiston() {
+		hangpiston.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	public void initDefaultCommand() {
+
+		setDefaultCommand(new HangerCommand());
+	}
+}

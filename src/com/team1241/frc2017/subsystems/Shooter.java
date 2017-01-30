@@ -1,9 +1,6 @@
 package com.team1241.frc2017.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.FeedbackDeviceStatus;
-import com.ctre.CANTalon.TalonControlMode;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ShooterCommand;
@@ -32,8 +29,6 @@ public class Shooter extends Subsystem {
 
 	private double kForward;
 	private double bForward;
-	
-
 
 	public Shooter() {
 		rightMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
@@ -77,12 +72,11 @@ public class Shooter extends Subsystem {
 		rightMotor.set(input);
 		leftMotor.set(-input);
 	}
-		
-	
+
 	public int getOptic() {
 		return optical.get();
 	}
-	
+
 	public double getRPM() {
 		return optical.getRate() * 60;
 	}
