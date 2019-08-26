@@ -30,6 +30,6 @@ The code is divided into several packages, each responsible for a different aspe
 
     
 ## Package Functions
-- [`com.team254.frc2019`](src/com/team1241/frc2017)
+- [`com.team1241.frc2017`](src/com/team1241/frc2017)
 
     Contains the robot's central functions and holds a class with all numerical constants used throughout the code
