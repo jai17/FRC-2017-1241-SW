@@ -30,7 +30,6 @@ The code is divided into several packages, each responsible for a different aspe
 
     
 ## Package Functions
-- [`com.team254.frc2019`](src/main/java/com/team254/frc2019)
+- [`com.team254.frc2019`](src/com/team1241/frc2017)
 
-    Contains the robot's central functions and holds a class with all numerical constants used throughout the code (see [`Constants.java`](src/main/java/com/team254/frc2019/Constants.java)). For example, the [`Robot`](src/main/java/com/team254/frc2019/Robot.java) class controls all routines depending on the robot mode. In addition, the [`RobotState`](src/main/java/com/team254/frc2019/RobotState.java) class keeps track of the current position of the robot's various frames of reference.
-
+    Contains the robot's central functions and holds a class with all numerical constants used throughout the code
